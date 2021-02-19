@@ -1,0 +1,22 @@
+Endpoints traités :
+les données pour une filière (soit gaz, soit électricité),
+les données pour une région,
+les données pour une filière et une région,
+
+
+region.html: http://localhost:5000/region/2
+Changer le For dep in...
+par le vrai code_région correspondant
+
+   @classmethod
+    def get_region(cls):
+        data = cls.db.energie.distinct([{"fields.code_region"}])
+        return list(data)
+
++Route Serveur.py + Route Client.py
+*****************************************************************************
+
+
+
+
+

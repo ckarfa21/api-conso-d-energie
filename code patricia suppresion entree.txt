@@ -1,0 +1,57 @@
+patriciaHier à 22:53
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form method="POST" action="http://127.0.0.1:5000/suppression"
+        <label>Id document:</label> <input name="id" size="50" value="601909c425c8845cf842b8e3" required/>
+        <button>Submit</button>
+    </form>
+</body>
+</html>
+data
+---------------------
+#suppression d'un document précis
+    @classmethod
+    def delete_doc(cls, id):
+        cls.db.conso.delete_one({'_id': ObjectId(id)})
+__
+serveur
+___
+@app.route("/document/delete/<id>", methods=['DELETE'])
+def delete_document(id):
+    #on récupère les données du formulaire pour les envoyer à la bdd
+    da.connexion()
+    da.delete_doc(id)
+    da.deconnexion()
+
+    return jsonify("SOS"), 200
+#route pour supprimer un document
+@app.route("/env/<id>", methods=['DELETE'])
+def delete_doc(cls, id):
+    da.connexion()
+    da.delete_doc(id)
+    da.deconnexion()
+
+    return jsonify({"message":"document supprimé avec succès"}), 200
+___
+client
+# Route qui propose la modification du document
+@app.route("/suppression_choix")
+def suppression_choix():
+
+    return render_template("suppression.html")
+
+
+#Suppression d'un document
+@app.route("/suppression", methods=["POST"])
+def supp_doc():
+    data = request.form.to_dict()
+
+    url = URL_API + "/document/delete/" + str(data['id'])
+    reponse = requests.delete(url)
+    return render_template("suppression.html")
